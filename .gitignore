@@ -433,5 +433,6 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 
 # Project specific
-*/appsettings.Development.json
-*/appsettings.Production.json
+*.Development.json
+*.Production.json
+PushToServer.ps1
