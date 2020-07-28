@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Website.Frontend.Models;
@@ -24,6 +26,25 @@ namespace Website.Frontend.Controllers
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [Authorize(AuthenticationSchemes = "Discord")]
+        public IActionResult Secret()
+        {
+            var id = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            var username = User.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+
+            if (id != "202095042372829184")
+            {
+                return Unauthorized();
+            }
+
+            return View();
+        }
+
+        public IActionResult DiscordAuthFailed()
         {
             return View();
         }
